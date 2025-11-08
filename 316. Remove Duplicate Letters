@@ -1,0 +1,15 @@
+class Solution:
+    def removeDuplicateLetters(self, s: str) -> str:
+        last = {ch: i for i, ch in enumerate(s)}   # last position of each char
+        stack = []
+        used = set()
+
+        for i, ch in enumerate(s):
+            if ch not in used:
+                # remove bigger chars from stack if they appear later again
+                while stack and ch < stack[-1] and last[stack[-1]] > i:
+                    used.remove(stack.pop())
+                stack.append(ch)
+                used.add(ch)
+
+        return "".join(stack)
