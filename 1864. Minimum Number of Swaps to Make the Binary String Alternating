@@ -1,0 +1,32 @@
+class Solution:
+    def minSwaps(self, s: str) -> int:
+        n = len(s)
+        ones = s.count('1')
+        zeros = n - ones
+
+        if abs(ones - zeros) > 1:
+            return -1
+
+        def count_mismatch(start):
+            mismatch = 0
+            expected = start
+
+            for ch in s:
+                if ch != expected:
+                    mismatch += 1
+
+                # replace one-line if–else with normal if–else
+                if expected == '0':
+                    expected = '1'
+                else:
+                    expected = '0'
+
+            return mismatch // 2
+
+        if ones == zeros:
+            return min(count_mismatch('0'), count_mismatch('1'))
+
+        if ones > zeros:
+            return count_mismatch('1')
+
+        return count_mismatch('0')
